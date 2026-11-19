@@ -3,12 +3,14 @@ import React from "react";
 function ToyCard({ toy, onDeleteToy, onUpdateToy }) {
   const { id, name, image, likes } = toy;
 
+  // DELETE the toy on the server, then remove it from state
   function handleDelete() {
     fetch(`http://localhost:3001/toys/${id}`, { method: "DELETE" }).then(() =>
       onDeleteToy(id)
     );
   }
 
+  // PATCH the toy's likes on the server, then update it in state
   function handleLike() {
     fetch(`http://localhost:3001/toys/${id}`, {
       method: "PATCH",
