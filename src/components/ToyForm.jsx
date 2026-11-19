@@ -1,27 +1,24 @@
 import React, { useState } from "react";
 
 function ToyForm({ onAddToy }) {
-  // Controlled form: React state holds what the user types
   const [formData, setFormData] = useState({ name: "", image: "" });
 
-  // Update the matching field (name or image) as the user types
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  // POST the new toy to the server, then add it to state
   function handleSubmit(e) {
-    e.preventDefault(); // stop the page from reloading
+    e.preventDefault();
 
     fetch("http://localhost:3001/toys", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...formData, likes: 0 }), // new toys start at 0 likes
+      body: JSON.stringify({ ...formData, likes: 0 }),
     })
       .then((r) => r.json())
       .then((newToy) => {
         onAddToy(newToy);
-        setFormData({ name: "", image: "" }); // clear the form
+        setFormData({ name: "", image: "" });
       });
   }
 
